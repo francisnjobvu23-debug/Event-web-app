@@ -1,0 +1,126 @@
+import React from 'react';
+import { 
+  createBrowserRouter,
+  RouterProvider,
+  Route,
+  createRoutesFromElements,
+  Outlet
+} from 'react-router-dom';
+import Navigation from './components/Navigation';
+import ProtectedRoute from './components/ProtectedRoute';
+
+// Public pages
+import Home from './pages/Home';
+import EventDetail from './pages/EventDetail';
+import Login from './pages/Login';
+import Signup from './pages/Signup';
+import Profile from './pages/Profile';
+
+// Admin pages
+import AdminDashboard from './pages/admin/AdminDashboard';
+import ManageUsers from './pages/admin/ManageUsers';
+
+// Organizer pages
+import OrganizerDashboard from './pages/organizer/OrganizerDashboard';
+import CreateEvent from './pages/organizer/CreateEvent';
+
+// Attendee pages
+import AttendeeDashboard from './pages/attendee/AttendeeDashboard';
+import MyRSVPs from './pages/attendee/MyRSVPs';
+
+// Layout component
+const Layout = () => (
+  <>
+    <Navigation />
+    <div className="container" style={{padding: 20}}>
+      <Outlet />
+    </div>
+  </>
+);
+
+const router = createBrowserRouter(
+  createRoutesFromElements(
+    <Route element={<Layout />}>
+      {/* Public Routes */}
+      <Route path="/" element={<Home />} />
+      <Route path="/events" element={<Home />} />
+      <Route path="/event/:id" element={<EventDetail />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/signup" element={<Signup />} />
+      
+      {/* Protected Routes */}
+      <Route 
+        path="/profile" 
+        element={
+          <ProtectedRoute>
+            <Profile />
+          </ProtectedRoute>
+        } 
+      />
+
+      {/* Admin Routes */}
+      <Route path="/admin">
+        <Route 
+          path="dashboard" 
+          element={
+            <ProtectedRoute allowedRoles={['ADMIN']}>
+              <AdminDashboard />
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="users" 
+          element={
+            <ProtectedRoute allowedRoles={['ADMIN']}>
+              <ManageUsers />
+            </ProtectedRoute>
+          } 
+        />
+      </Route>
+
+      {/* Organizer Routes */}
+      <Route path="/organizer">
+        <Route 
+          path="dashboard" 
+          element={
+            <ProtectedRoute allowedRoles={['ORGANIZER']}>
+              <OrganizerDashboard />
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="create-event" 
+          element={
+            <ProtectedRoute allowedRoles={['ORGANIZER']}>
+              <CreateEvent />
+            </ProtectedRoute>
+          } 
+        />
+      </Route>
+
+      {/* Attendee Routes */}
+      <Route path="/attendee">
+        <Route 
+          path="dashboard" 
+          element={
+            <ProtectedRoute allowedRoles={['ATTENDEE']}>
+              <AttendeeDashboard />
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="my-rsvps" 
+          element={
+            <ProtectedRoute allowedRoles={['ATTENDEE']}>
+              <MyRSVPs />
+            </ProtectedRoute>
+          } 
+        />
+      </Route>
+    </Route>
+  )
+);
+
+export default function App() {
+  return <RouterProvider router={router} />;
+}
