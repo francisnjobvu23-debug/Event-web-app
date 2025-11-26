@@ -71,3 +71,9 @@ event-monolith-app/
 - POST `/events/:id/rsvp` - RSVP to an event
 - GET `/events/:id/rsvp` - Get event RSVPs
 - DELETE `/events/:id/rsvp` - Cancel RSVP
+
+###Team Members
+-Elijah Nonde 2420934 BSE 
+-Francis Njobvu 2410362 BSE Year 2, Semester 2
+-Mulenga Mulenga 2410605 BSE Year 2, Semester 2
+-
