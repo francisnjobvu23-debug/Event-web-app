@@ -73,6 +73,7 @@ event-monolith-app/
 - DELETE `/events/:id/rsvp` - Cancel RSVP
 
 ###Team Members
+
 -Elijah Nonde 2420934 BSE 
 
 -Francis Njobvu 2410362 BSE Year 2, Semester 2
